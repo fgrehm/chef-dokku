@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
 
   config.vm.provider :virtualbox do |_, overrides|
-    overrides.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box"
+    overrides.vm.box_url = 'http://goo.gl/Y4aRr'
   end
 
   config.vm.provider :lxc do |lxc, overrides|
