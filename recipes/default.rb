@@ -46,7 +46,7 @@ end
 
 if plugins = node['dokku']['plugins']
   plugins.each do |plugin_name, repo_url|
-    execute "clone_#{plugin_name}" do
+    execute "plugin_install_#{plugin_name}" do
       command "git clone #{repo_url} #{plugin_name} && cd #{plugin_name} && dokku plugins-install"
       cwd     '/var/lib/dokku/plugins'
       not_if  "test -d /var/lib/dokku/plugins/#{plugin_name}"
