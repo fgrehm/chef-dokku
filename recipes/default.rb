@@ -33,7 +33,7 @@ if apps = node['dokku']['apps']
       end
 
       app_env.each do |var, value|
-        # TODO: Remove old export in case the value changes
+        # TODO: Remove old export before writing
         export = "export #{var}='#{value}'"
         execute "echo \"#{export}\" >> /home/git/#{app_name}/ENV" do
           user   'git'
