@@ -3,14 +3,6 @@ require 'spec_helper'
 describe 'dokku::bootstrap' do
   let(:chef_runner) do 
     runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
-    runner.node.set['dokku']['sync']['base'] = true
-    runner.node.set['dokku']['gitreceive']['filename'] = 'gitreceive'
-    runner.node.set['dokku']['gitreceive']['src_url'] = 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
-    runner.node.set['dokku']['sshcommand']['filename'] = 'sshcommand'
-    runner.node.set['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/sshcommand/master/sshcommand'
-    runner.node.set['dokku']['pluginhook']['src_url'] = 'https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb'
-    runner.node.set['dokku']['pluginhook']['source'] = 'pluginhook_0.1.0_amd64.deb'
-    runner.node.set['dokku']['pluginhook']['checksum'] = '26a790070ee0c34fd4c53b24aabeb92778faed4004110c480c13b48608545fe5'
     runner
   end
 
@@ -92,11 +84,7 @@ describe 'dokku::bootstrap' do
   context 'when the dokku domain is explicitly set' do
     let(:chef_runner) do
       runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
-      runner.node.set['dokku']['sync']['base'] = true
       runner.node.set['dokku']['domain'] = 'foobar.com'
-      runner.node.set['dokku']['gitreceive']['src_url'] = 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
-      runner.node.set['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/sshcommand/master/sshcommand'
-      runner.node.set['dokku']['pluginhook']['src_url'] = 'https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb'
       runner
     end
 

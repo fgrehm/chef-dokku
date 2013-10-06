@@ -9,5 +9,6 @@ default['dokku']['sshcommand']['filename'] = 'sshcommand'
 default['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/sshcommand/master/sshcommand'
 
 default['dokku']['gitreceive']['filename'] = 'gitreceive'
+default['dokku']['gitreceive']['src_url'] = 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
 
 force_default['nginx']['default_site_enabled'] = false
