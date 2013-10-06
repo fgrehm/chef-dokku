@@ -10,10 +10,21 @@ node['dokku']['apps'].each do |app_name, config|
     source 'apps/ENV.erb'
     owner  'git'
     group  'git'
-    action :create_if_missing
+    action :create
     variables(
       "env" => config['env'] || {}
     )
     not_if { delete }
+  end
+
+  # Clean up docker
+  if delete
+    docker_container "app/#{app_name}" do
+      action :remove
+    end
+
+    docker_image "app/#{app_name}" do
+      action :remove
+    end
   end
 end

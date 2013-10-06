@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'dokku::apps' do
   let(:chef_runner) do 
-    runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
+    runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04', :evaluate_guards => true)
     runner.node.set['dokku']['apps'] = {
       'testapp' => {
         'env' => {
@@ -30,6 +30,14 @@ describe 'dokku::apps' do
 
   it 'should delete the testapp2 directory under /home/git' do
     expect(chef_run).to delete_directory '/home/git/testapp2'
+  end
+
+  it 'should remove the app/testapp2 docker container' do
+    expect(chef_run).to remove_docker_container 'app/testapp2'
+  end
+
+  it 'should remove the app/testapp2 docker image' do
+    expect(chef_run).to remove_docker_image 'app/testapp2'
   end
 
   it 'should not create an ENV file for testapp2' do

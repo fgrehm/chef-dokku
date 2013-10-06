@@ -11,5 +11,6 @@ berksfile.install(path: 'vendor/cookbooks')
 module ChefSpec
   module Matchers
     define_resource_matchers([:pull, :build, :remove, :import], [:docker_image], :name)
+    define_resource_matchers([:remove, :restart, :run, :start, :stop], [:docker_container], :name)
   end
 end
