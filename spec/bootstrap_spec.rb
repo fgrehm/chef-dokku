@@ -100,4 +100,8 @@ describe 'dokku::bootstrap' do
       expect(chef_run).to create_file_with_content('/home/git/VHOST', 'foobar.com')
     end
   end
+
+  it "restarts nginx" do
+    expect(chef_run).to reload_service('nginx')
+  end
 end

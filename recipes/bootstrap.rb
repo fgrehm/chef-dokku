@@ -105,6 +105,7 @@ end
 
 include_recipe "dokku::ssh_keys"
 
-# TODO: Custom buildpacks (?)
-# TODO: nginx configs
-# TODO: Support for removing a deployed app
+# Reload nginx
+service 'nginx' do
+  action :reload
+end
