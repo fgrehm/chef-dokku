@@ -10,5 +10,4 @@ default['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/ssh
 
 default['dokku']['gitreceive']['filename'] = 'gitreceive'
 
-default['dokku']['nginx/stable']['uri'] = 'http://ppa.launchpad.net/nginx/stable/ubuntu'
-default['dokku']['gitreceive']['src_url'] = 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
+force_default['nginx']['default_site_enabled'] = false
