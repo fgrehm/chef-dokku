@@ -1,6 +1,12 @@
 # Docker build stack
-docker_image node['dokku']['buildstack']['image_name'] do
-  image_url node['dokku']['buildstack']['prebuilt_url']
-  repository node['dokku']['buildstack']['image_name']
-  action node['dokku']['buildstack']['use_prebuilt'] ? 'import' : 'build'
+if node['dokku']['buildstack']['use_prebuilt']
+  docker_image node['dokku']['buildstack']['image_name'] do
+    image_url node['dokku']['buildstack']['prebuilt_url']
+    action :import
+  end
+else
+  docker_image node['dokku']['buildstack']['image_name'] do
+    image_url node['dokku']['buildstack']['stack_url']
+    action :build
+  end
 end
