@@ -23,7 +23,7 @@ describe 'dokku::bootstrap' do
   end
 
   # Dokku recipes
-  %w{docker::aufs docker::package dokku::install dokku::plugins dokku::apps}.each do |recipe|
+  %w{docker::aufs docker::package dokku::install dokku::plugins dokku::apps dokku::ssh_keys}.each do |recipe|
     it "includes the #{recipe} recipe" do
       expect(chef_run).to include_recipe recipe
     end

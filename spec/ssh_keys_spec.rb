@@ -12,6 +12,6 @@ describe 'dokku::ssh_keys' do
   let(:chef_run) { chef_runner.converge described_recipe }
 
   it 'should upload all ssh keys' do
-    expect(chef_run).to execute_bash_script('gitrecieve_uploadkey')
+    expect(chef_run).to execute_bash_script('gitrecieve_upload-key')
   end
 end
