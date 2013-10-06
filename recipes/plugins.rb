@@ -26,6 +26,7 @@ template "/etc/nginx/conf.d/dokku.conf" do
 end
 
 service "nginx-reloader" do
+  provider Chef::Provider::Service::Upstart
   action :start
 end
 

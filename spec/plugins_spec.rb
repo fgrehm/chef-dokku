@@ -35,7 +35,10 @@ describe 'dokku::plugins' do
   end
 
   it 'should start the nginx-reloader service' do
-    expect(chef_run).to start_service 'nginx-reloader'
+    # Doesn't work when we specify provider...
+    expect(chef_run).to start_service('nginx-reloader')#.with(
+      #:provider => Chef::Provider::Service::Upstart
+    #)
   end
 
   it 'should run dokku_plugins_install' do
