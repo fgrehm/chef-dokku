@@ -5,7 +5,7 @@ gem "rake"
 gem "berkshelf"
 
 # Testing gems
-gem "chefspec"
+gem "chefspec", github: "acrmp/chefspec"
 gem "foodcritic"
 gem "strainer"
 

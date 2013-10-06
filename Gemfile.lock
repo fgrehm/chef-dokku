@@ -1,3 +1,14 @@
+GIT
+  remote: git://github.com/acrmp/chefspec.git
+  revision: bb5574b13df3c5a7b2754ac46196fabae98abe4e
+  specs:
+    chefspec (2.0.1)
+      chef (>= 10.0)
+      erubis
+      fauxhai (~> 1.1)
+      minitest-chef-handler (>= 0.6.0)
+      rspec (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -51,12 +62,6 @@ GEM
       ohai (>= 0.6.0)
       rest-client (>= 1.0.4, < 1.7.0)
       yajl-ruby (~> 1.1)
-    chefspec (2.0.1)
-      chef (>= 10.0)
-      erubis
-      fauxhai (~> 1.1)
-      minitest-chef-handler (>= 0.6.0)
-      rspec (~> 2.0)
     chozo (0.6.1)
       activesupport (>= 3.2.0)
       hashie (>= 2.0.2)
@@ -238,7 +243,7 @@ PLATFORMS
 
 DEPENDENCIES
   berkshelf
-  chefspec
+  chefspec!
   foodcritic
   knife-community
   rake
