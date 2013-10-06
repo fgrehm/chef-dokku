@@ -70,6 +70,14 @@ describe 'dokku::bootstrap' do
     expect(chef_run).to include_recipe 'nginx::repo'
   end
 
+  it 'should delete /etc/nginx/conf.d/default.conf' do
+    expect(chef_run).to delete_file '/etc/nginx/conf.d/default.conf'
+  end
+
+  it 'should delete /etc/nginx/conf.d/example_ssl.conf' do
+    expect(chef_run).to delete_file '/etc/nginx/conf.d/example_ssl.conf'
+  end
+
   it "creates the docker group" do
     expect(chef_run).to create_group('docker')
     # with doesn't appear to chain properly off of create_group

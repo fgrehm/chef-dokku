@@ -85,6 +85,15 @@ include_recipe "dokku::install"
 include_recipe 'nginx::repo'
 include_recipe 'nginx'
 
+# Clean up distribution configs
+file '/etc/nginx/conf.d/example_ssl.conf' do
+  action :delete
+end
+
+file '/etc/nginx/conf.d/default.conf' do
+  action :delete
+end
+
 include_recipe 'dokku::plugins'
 include_recipe 'dokku::apps'
 
