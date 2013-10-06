@@ -11,21 +11,20 @@ describe 'dokku::bootstrap' do
     runner.node.set['dokku']['pluginhook']['src_url'] = 'https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb'
     runner.node.set['dokku']['pluginhook']['source'] = 'pluginhook_0.1.0_amd64.deb'
     runner.node.set['dokku']['pluginhook']['checksum'] = '26a790070ee0c34fd4c53b24aabeb92778faed4004110c480c13b48608545fe5'
-    runner.node.set['nginx']['upstream_repository'] = "http://nginx.org/packages/#{runner.node['platform']}"
     runner
   end
 
   let(:chef_run) { chef_runner.converge described_recipe }
 
   # Dependency recipes
-  %w{apt git build-essential user}.each do |recipe|
+  %w{apt git build-essential user nginx::repo nginx}.each do |recipe|
     it "includes the #{recipe} recipe" do
       expect(chef_run).to include_recipe recipe
     end
   end
 
   # Dependency packages
-  %w{software-properties-common}.each do |package|
+  %w{software-properties-common dnsutils}.each do |package|
     it "installs the #{package} package" do
       expect(chef_run).to install_package package
     end
@@ -69,9 +68,11 @@ describe 'dokku::bootstrap' do
       :checksum => '26a790070ee0c34fd4c53b24aabeb92778faed4004110c480c13b48608545fe5'
     )
   end
-  it "installs pluginhook" do
-    expect(chef_run).to install_package('pluginhook_0.1.0_amd64.deb')
-  end
+  # Doesn't work, need ChefSpec v3
+  # https://github.com/acrmp/chefspec/blob/unify_matchers/lib/chefspec/api/dpkg_package.rb
+  #it "installs pluginhook" do
+    #expect(chef_run).to install_dpkg_package('pluginhook_0.1.0_amd64.deb')
+  #end
 
   it "includes the nginx::repo recipe" do
     expect(chef_run).to include_recipe 'nginx::repo'
@@ -93,7 +94,9 @@ describe 'dokku::bootstrap' do
       runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
       runner.node.set['dokku']['sync']['base'] = true
       runner.node.set['dokku']['domain'] = 'foobar.com'
-      runner.node.set['nginx']['upstream_repository'] = "http://nginx.org/packages/#{runner.node['platform']}"
+      runner.node.set['dokku']['gitreceive']['src_url'] = 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
+      runner.node.set['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/sshcommand/master/sshcommand'
+      runner.node.set['dokku']['pluginhook']['src_url'] = 'https://s3.amazonaws.com/progrium-pluginhook/pluginhook_0.1.0_amd64.deb'
       runner
     end
 

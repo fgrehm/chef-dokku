@@ -8,7 +8,7 @@
 end
 
 # Package deps
-%w{software-properties-common}.each do |dep|
+%w{software-properties-common dnsutils}.each do |dep|
   package dep
 end
 
@@ -57,7 +57,7 @@ remote_file pluginhook_path do
   checksum node['dokku']['pluginhook']['checksum']
 end
 
-package pluginhook_name do
+dpkg_package pluginhook_name do
   source pluginhook_path
   only_if { node['dokku']['sync']['dependencies'] }
 end
@@ -83,6 +83,7 @@ include_recipe "dokku::install"
 # Install nginx ahead of the plugin install so that it is
 # chef managed
 include_recipe 'nginx::repo'
+include_recipe 'nginx'
 
 include_recipe 'dokku::plugins'
 include_recipe 'dokku::apps'
@@ -91,7 +92,6 @@ include_recipe 'dokku::apps'
 domain = node['dokku']['domain'] || node['fqdn']
 file '/home/git/VHOST' do
   content domain
-  only_if domain
 end
 
 # TODO: Add SSH key
