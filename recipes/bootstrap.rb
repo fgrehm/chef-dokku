@@ -94,7 +94,8 @@ file '/home/git/VHOST' do
   content domain
 end
 
-# TODO: Add SSH key
+include_recipe "dokku::ssh_keys"
+
 # TODO: Custom buildpacks (?)
 # TODO: nginx configs
 # TODO: Support for removing a deployed app
