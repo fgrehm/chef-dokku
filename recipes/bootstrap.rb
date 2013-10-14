@@ -8,7 +8,7 @@
 end
 
 # Package deps
-%w{software-properties-common dnsutils}.each do |dep|
+%w{software-properties-common dnsutils apt-transport-https}.each do |dep|
   package dep
 end
 
