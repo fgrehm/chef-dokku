@@ -16,14 +16,6 @@ Vagrant.configure("2") do |config|
     overrides.vm.box_url = "http://bit.ly/vagrant-lxc-raring64-2013-07-12"
   end
 
-  config.vm.provision :shell, inline: %[
-    # This is a HACK!
-    if ! [ -L /tmp/vagrant-chef-1/cookbooks/cookbooks/dokku ]; then
-      mkdir -p /tmp/vagrant-chef-1/cookbooks/cookbooks
-      ln -s /vagrant /tmp/vagrant-chef-1/cookbooks/cookbooks/dokku
-    fi
-  ]
-
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ['vendor/cookbooks']
     chef.add_recipe "dokku::bootstrap"
