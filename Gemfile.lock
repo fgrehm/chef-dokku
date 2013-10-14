@@ -244,6 +244,7 @@ PLATFORMS
 DEPENDENCIES
   berkshelf
   chefspec!
+  faraday (~> 0.8.5)
   foodcritic
   knife-community
   rake
