@@ -17,14 +17,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision :shell, inline: %[
-    # Required to boot nested containers
-    if ! [ -f /etc/default/lxc ]; then
-      cat <<STR > /etc/default/lxc
-LXC_AUTO="false"
-USE_LXC_BRIDGE="false"
-STR
-    fi
-
     # This is a HACK!
     if ! [ -L /tmp/vagrant-chef-1/cookbooks/cookbooks/dokku ]; then
       mkdir -p /tmp/vagrant-chef-1/cookbooks/cookbooks
@@ -36,6 +28,11 @@ STR
     chef.cookbooks_path = ['vendor/cookbooks']
     chef.add_recipe "dokku::bootstrap"
     chef.json = {
+      # Required to boot nested containers
+      lxc: {
+        auto_start: false,
+        use_bridge: false
+      },
       dokku: {
         domain: 'vagrant.local',
         plugins: {
