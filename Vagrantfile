@@ -33,7 +33,8 @@ STR
   ]
 
   config.vm.provision :chef_solo do |chef|
-    chef.add_recipe "dokku"
+    chef.cookbooks_path = ['vendor/cookbooks']
+    chef.add_recipe "dokku::bootstrap"
     chef.json = {
       dokku: {
         domain: 'vagrant.local',
