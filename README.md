@@ -52,6 +52,8 @@ Here's how you can quickly get testing or developing against the cookbook thanks
     vagrant plugin install vagrant-omnibus
     git clone git://github.com/fgrehm/chef-dokku.git
     cd chef-dokku
+    # This will reduce the time take to perform the initial bootstrap
+    mkdir tmp && wget https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_c30652f59a.tgz -O tmp/stack.tgz
     bundle install
     bundle exec berks install -p vendor/cookbooks
     vagrant up

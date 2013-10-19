@@ -1,6 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Test domain, change as needed
+DOKKU_DOMAIN = 'dokku.vagrant'
+
+# In case you have the stack available
+PREBUILT_STACK_URL = File.exist?("#{Dir.pwd}/tmp/stack.tgz") ?
+  'file:///vagrant/tmp/stack.tgz' :
+  'https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_c30652f59a.tgz'
+
 Vagrant.configure("2") do |config|
   config.vm.box = "raring64"
 
@@ -26,7 +34,10 @@ Vagrant.configure("2") do |config|
         use_bridge: false
       },
       dokku: {
-        domain: 'vagrant.local',
+        domain: DOKKU_DOMAIN,
+        buildstack: {
+          prebuilt_url: PREBUILT_STACK_URL,
+        },
         plugins: {
           postgresql: 'https://github.com/Kloadut/dokku-pg-plugin.git'
         },
