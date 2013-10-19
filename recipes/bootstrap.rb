@@ -49,7 +49,7 @@ bash 'install_sshcommand' do
 end
 
 # Install pluginhook
-pluginhook_name = node['dokku']['pluginhook']['filename'] 
+pluginhook_name = node['dokku']['pluginhook']['filename']
 pluginhook_path = "#{Chef::Config[:file_cache_path]}/#{pluginhook_name}"
 
 remote_file pluginhook_path do
@@ -70,6 +70,11 @@ group "docker" do
   append true
   members ['git', 'dokku']
 end
+
+# Make use of the lxc recipe so we can manage lxc related configs (we need this to disable the
+# default lxcbr0 inside vagrant-lxc containers in order to avoid potential conflicts with the
+# bridge running on the Host)
+include_recipe "lxc"
 
 # Install docker
 include_recipe "docker::package"
