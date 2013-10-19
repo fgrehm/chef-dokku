@@ -12,6 +12,7 @@ PREBUILT_STACK_URL = File.exist?("#{Dir.pwd}/tmp/stack.tgz") ?
 Vagrant.configure("2") do |config|
   config.vm.box = "raring64"
 
+  config.cache.auto_detect = true
   config.omnibus.chef_version = :latest
 
   config.vm.provider :virtualbox do |_, overrides|
