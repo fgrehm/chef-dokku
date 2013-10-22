@@ -2,6 +2,16 @@ require "fileutils"
 require "kitchen"
 include FileUtils
 
+begin
+  require 'rspec/core/rake_task'
+
+  desc 'Run all specs'
+  RSpec::Core::RakeTask.new
+
+  desc 'Default task which runs all specs'
+  task :default => :spec
+rescue LoadError; end
+
 # Stolen from https://github.com/drnic/chef-hub/blob/master/Rakefile
 desc "Share cookbook"
 task :share, [:version] do |t, args|
