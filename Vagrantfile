@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ['vendor/cookbooks']
+    chef.add_recipe "lxc"
     chef.add_recipe "dokku::bootstrap"
     chef.json = {
       # Required to boot nested containers
