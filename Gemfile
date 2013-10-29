@@ -7,7 +7,7 @@ gem "berkshelf"
 gem "faraday", "~> 0.8.5"
 
 # Testing gems
-gem "chefspec", github: "acrmp/chefspec"
+gem "chefspec"
 gem "foodcritic"
 gem "strainer"
 
