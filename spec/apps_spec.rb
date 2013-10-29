@@ -2,20 +2,20 @@ require 'spec_helper'
 
 describe 'dokku::apps' do
   let(:chef_runner) do 
-    runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04', :evaluate_guards => true)
-    runner.node.set['dokku']['apps'] = {
-      'testapp' => {
-        'env' => {
-          'var1' => 'a',
-          'var2' => 'b'
-        }
-      },
-      'testapp2' => {
-        'remove' => true
-      },
-      'testapp3' => {}
-    }
-    runner
+    ChefSpec::Runner.new do |node|
+      node.set['dokku']['apps'] = {
+        'testapp' => {
+          'env' => {
+            'var1' => 'a',
+            'var2' => 'b'
+          }
+        },
+        'testapp2' => {
+          'remove' => true
+        },
+        'testapp3' => {}
+      }
+    end
   end
   let(:chef_run) { chef_runner.converge described_recipe }
 
@@ -25,7 +25,8 @@ describe 'dokku::apps' do
 
   it 'should set the ownership of the testapp directory to git:git' do
     app1_dir = chef_run.directory('/home/git/testapp')
-    expect(app1_dir).to be_owned_by 'git', 'git'
+    expect(app1_dir.owner).to eq('git')
+    expect(app1_dir.group).to eq('git')
   end
 
   it 'should delete the testapp2 directory under /home/git' do
@@ -45,11 +46,12 @@ describe 'dokku::apps' do
   end
 
   it 'should create the an ENV for testapp' do
-    expect(chef_run).to create_file_with_content('/home/git/testapp/ENV', "export VAR1='a'\nexport VAR2='b'")
+    expect(chef_run).to render_file("/home/git/testapp/ENV").with_content("export VAR1='a'\nexport VAR2='b'")
   end
 
   it 'should set the ownership of the ENV file to git:git' do
     env_file = chef_run.template('/home/git/testapp/ENV')
-    expect(env_file).to be_owned_by('git', 'git')
+    expect(env_file.owner).to eq('git')
+    expect(env_file.group).to eq('git')
   end
 end

@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe 'dokku::bootstrap' do
   let(:chef_runner) do 
-    runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
-    runner
+    ChefSpec::Runner.new
   end
 
   let(:chef_run) { chef_runner.converge described_recipe }
@@ -36,7 +35,7 @@ describe 'dokku::bootstrap' do
     )
   end
   it "installs gitreceive" do
-    expect(chef_run).to execute_bash_script('install_gitreceive').with(
+    expect(chef_run).to run_bash("install_gitreceive").with(
       :cwd => Chef::Config[:file_cache_path]
     )
   end
@@ -48,7 +47,7 @@ describe 'dokku::bootstrap' do
     )
   end
   it "installs sshcommand" do
-    expect(chef_run).to execute_bash_script('install_sshcommand').with(
+    expect(chef_run).to run_bash("install_sshcommand").with(
       :cwd => Chef::Config[:file_cache_path]
     )
   end
@@ -60,11 +59,10 @@ describe 'dokku::bootstrap' do
       :checksum => '26a790070ee0c34fd4c53b24aabeb92778faed4004110c480c13b48608545fe5'
     )
   end
-  # Doesn't work, need ChefSpec v3
-  # https://github.com/acrmp/chefspec/blob/unify_matchers/lib/chefspec/api/dpkg_package.rb
-  #it "installs pluginhook" do
-    #expect(chef_run).to install_dpkg_package('pluginhook_0.1.0_amd64.deb')
-  #end
+
+  it "installs pluginhook" do
+    expect(chef_run).to install_dpkg_package('pluginhook_0.1.0_amd64.deb')
+  end
 
   it "includes the nginx::repo recipe" do
     expect(chef_run).to include_recipe 'nginx::repo'
@@ -79,25 +77,23 @@ describe 'dokku::bootstrap' do
   end
 
   it "creates the docker group" do
-    expect(chef_run).to create_group('docker')
-    # with doesn't appear to chain properly off of create_group
-    #expect(chef_run).to create_group('docker').with(
-      #:members => ['git', 'dokku'], :append => true)
+    expect(chef_run).to create_group('docker').with(
+      :members => ['git', 'dokku'], :append => true)
   end
 
   it "creates the VHOST file to the node's fqdn" do
-    expect(chef_run).to create_file_with_content('/home/git/VHOST', chef_run.node['fqdn'])
+    expect(chef_run).to render_file("/home/git/VHOST").with_content(chef_run.node['fqdn'])
   end
 
   context 'when the dokku domain is explicitly set' do
     let(:chef_runner) do
-      runner = ChefSpec::ChefRunner.new(platform:'ubuntu', version:'12.04')
-      runner.node.set['dokku']['domain'] = 'foobar.com'
-      runner
+      ChefSpec::Runner.new do |node|
+        node.set['dokku']['domain'] = 'foobar.com'
+      end
     end
 
     it "creates the VHOST file with the content 'foobar.com'" do
-      expect(chef_run).to create_file_with_content('/home/git/VHOST', 'foobar.com')
+      expect(chef_run).to render_file("/home/git/VHOST").with_content("foobar.com")
     end
   end
 
