@@ -7,6 +7,7 @@ end
 
 # The nginx install script does some stuff we don't want
 # nuke it and do the install manually
+# Can be removed once https://github.com/progrium/dokku/pull/276 is merged
 file "#{node['dokku']['plugins_dir']}/nginx-vhosts/install" do
   action :delete
 end

@@ -35,18 +35,6 @@ describe 'dokku::bootstrap' do
     end
   end
 
-  # gitreceive
-  it "fetches gitreceive" do
-    expect(chef_run).to create_remote_file("#{Chef::Config[:file_cache_path]}/gitreceive").with(
-      :source => 'https://raw.github.com/progrium/gitreceive/master/gitreceive'
-    )
-  end
-  it "installs gitreceive" do
-    expect(chef_run).to run_bash("install_gitreceive").with(
-      :cwd => Chef::Config[:file_cache_path]
-    )
-  end
-
   # sshcommand
   it "fetches sshcommand" do
     expect(chef_run).to create_remote_file("#{Chef::Config[:file_cache_path]}/sshcommand").with(

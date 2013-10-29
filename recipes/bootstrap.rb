@@ -12,24 +12,6 @@ end
   package dep
 end
 
-# Install gitreceive
-gitreceive_name = node['dokku']['gitreceive']['filename']
-gitreceive_path = "#{Chef::Config[:file_cache_path]}/#{gitreceive_name}"
-
-remote_file gitreceive_path do
-  source node['dokku']['gitreceive']['src_url']
-end
-
-bash 'install_gitreceive' do
-  cwd ::File.dirname(gitreceive_path)
-  code <<-EOH
-    cp gitreceive /usr/local/bin
-    chmod +x /usr/local/bin/gitreceive
-    test -f /home/git/receiver || gitreceive init
-  EOH
-  only_if { node['dokku']['sync']['dependencies'] }
-end
-
 # Install sshcommand
 sshcommand_name = node['dokku']['sshcommand']['filename']
 sshcommand_path = "#{Chef::Config[:file_cache_path]}/#{sshcommand_name}"
