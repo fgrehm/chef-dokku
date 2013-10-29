@@ -2,13 +2,12 @@
 git "#{Chef::Config[:file_cache_path]}/dokku" do
   repository node['dokku']['git_repository']
   reference node['dokku']['git_revision']
-  action :sync
+  action node['dokku']['sync']['base'] ? :sync : :checkout
 end
 
-bash "install_dokku" do
+bash "copy_dokku_files" do
   cwd "#{Chef::Config[:file_cache_path]}/dokku"
   code <<-EOH
-    make install
+    make copyfiles
   EOH
-  only_if { node['dokku']['sync']['base'] }
 end
