@@ -7,6 +7,13 @@ describe 'dokku::bootstrap' do
 
   let(:chef_run) { chef_runner.converge described_recipe }
 
+  # We need to stub this modprobe call in the docker cookbook
+  # since it causes Travis to fail
+  # https://github.com/bflad/chef-docker/blob/587bf0334468eef4e1840231b566ff9e1fc8f1aa/recipes/aufs.rb#L33
+  before do
+    stub_command("modprobe -l | grep aufs").and_return(true)
+  end
+
   # Dependency recipes
   %w{apt git build-essential user nginx::repo nginx}.each do |recipe|
     it "includes the #{recipe} recipe" do
