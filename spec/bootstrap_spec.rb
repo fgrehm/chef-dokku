@@ -73,11 +73,11 @@ describe 'dokku::bootstrap' do
 
   it "creates the docker group" do
     expect(chef_run).to create_group('docker').with(
-      :members => ['git', 'dokku'], :append => true)
+      :members => ['dokku'], :append => true)
   end
 
   it "creates the VHOST file to the node's fqdn" do
-    expect(chef_run).to render_file("/home/git/VHOST").with_content(chef_run.node['fqdn'])
+    expect(chef_run).to render_file("/home/dokku/VHOST").with_content(chef_run.node['fqdn'])
   end
 
   context 'when the dokku domain is explicitly set' do
@@ -88,7 +88,7 @@ describe 'dokku::bootstrap' do
     end
 
     it "creates the VHOST file with the content 'foobar.com'" do
-      expect(chef_run).to render_file("/home/git/VHOST").with_content("foobar.com")
+      expect(chef_run).to render_file("/home/dokku/VHOST").with_content("foobar.com")
     end
   end
 

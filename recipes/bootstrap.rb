@@ -47,10 +47,10 @@ end
 # Pull in aufs
 include_recipe "docker::aufs"
 
-# Create docker group with git and dokku as members
+# Create docker group with dokku as member
 group "docker" do
   append true
-  members ['git', 'dokku']
+  members ['dokku']
 end
 
 # Install docker
@@ -81,7 +81,7 @@ include_recipe 'dokku::apps'
 
 #set VHOST
 domain = node['dokku']['domain'] || node['fqdn']
-file '/home/git/VHOST' do
+file '/home/dokku/VHOST' do
   content domain
 end
 
