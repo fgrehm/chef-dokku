@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
       },
       dokku: {
         domain: DOKKU_DOMAIN,
-        buildstack: {
+        buildstep: {
           prebuilt_url: PREBUILT_STACK_URL,
         },
         plugins: {
