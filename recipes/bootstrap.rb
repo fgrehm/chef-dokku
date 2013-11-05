@@ -56,8 +56,8 @@ end
 # Install docker
 include_recipe "docker::package"
 
-# Buildstack
-include_recipe "dokku::buildstack"
+# Buildstep
+include_recipe "dokku::buildstep"
 
 # Dokku install
 include_recipe "dokku::install"

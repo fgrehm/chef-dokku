@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'dokku::buildstack' do
+describe 'dokku::buildstep' do
   let(:chef_run) { chef_runner.converge described_recipe }
 
   context 'when use_prebuilt is true' do
     let(:chef_runner) do 
       ChefSpec::Runner.new do |node|
-        node.set['dokku']['buildstack']['image_name'] = 'progrium/buildstep'
-        node.set['dokku']['buildstack']['use_prebuilt'] = true
-        node.set['dokku']['buildstack']['prebuilt_url'] = 'prebuilt.tgz'
+        node.set['dokku']['buildstep']['image_name'] = 'progrium/buildstep'
+        node.set['dokku']['buildstep']['use_prebuilt'] = true
+        node.set['dokku']['buildstep']['prebuilt_url'] = 'prebuilt.tgz'
       end
     end
 
@@ -22,9 +22,9 @@ describe 'dokku::buildstack' do
   context 'when use_prebuilt is false' do
     let(:chef_runner) do 
       ChefSpec::Runner.new do |node|
-        node.set['dokku']['buildstack']['image_name'] = 'progrium/buildstep'
-        node.set['dokku']['buildstack']['use_prebuilt'] = false
-        node.set['dokku']['buildstack']['stack_url'] = 'github.com/progrium/buildstep'
+        node.set['dokku']['buildstep']['image_name'] = 'progrium/buildstep'
+        node.set['dokku']['buildstep']['use_prebuilt'] = false
+        node.set['dokku']['buildstep']['stack_url'] = 'github.com/progrium/buildstep'
       end
     end
 
