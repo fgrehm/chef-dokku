@@ -1,5 +1,5 @@
 node['dokku']['plugins'].each do |plugin_name, repo_url|
-  git "#{node['dokku']['plugins_dir']}/#{plugin_name}" do
+  git "#{node['dokku']['plugin_path']}/#{plugin_name}" do
     repository repo_url
     action :sync
   end
@@ -8,7 +8,7 @@ end
 # The nginx install script does some stuff we don't want
 # nuke it and do the install manually
 # Can be removed once https://github.com/progrium/dokku/pull/276 is merged
-file "#{node['dokku']['plugins_dir']}/nginx-vhosts/install" do
+file "#{node['dokku']['plugin_path']}/nginx-vhosts/install" do
   action :delete
 end
 
@@ -32,7 +32,7 @@ service "nginx-reloader" do
 end
 
 bash "dokku_plugins_install" do
-  cwd node['dokku']['plugins_dir']
+  cwd node['dokku']['plugin_path']
   code <<-EOH
     dokku plugins-install
   EOH
