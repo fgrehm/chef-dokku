@@ -81,7 +81,7 @@ include_recipe 'dokku::apps'
 
 #set VHOST
 domain = node['dokku']['domain'] || node['fqdn']
-file '/home/dokku/VHOST' do
+file File.join(node['dokku']['root'], 'VHOST') do
   content domain
 end
 

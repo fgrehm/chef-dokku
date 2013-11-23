@@ -1,12 +1,12 @@
 node['dokku']['apps'].each do |app_name, config|
   delete = !!config['remove']
-  directory "/home/dokku/#{app_name}" do
+  directory File.join(node['dokku']['root'],app_name) do
     owner 'dokku'
     group 'dokku'
     action delete ? :delete : :create
   end
 
-  template "/home/dokku/#{app_name}/ENV" do
+  template File.join(node['dokku']['root'],app_name, 'ENV') do
     source 'apps/ENV.erb'
     owner  'dokku'
     group  'dokku'
