@@ -8,6 +8,6 @@ version          '0.2.0'
 
 supports 'ubuntu', '= 13.04'
 
-%w{apt git build-essential nginx docker user}.each do |dep|
+%w{apt git build-essential nginx docker user sudo}.each do |dep|
   depends dep
 end
