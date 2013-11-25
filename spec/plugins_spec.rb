@@ -20,18 +20,12 @@ describe 'dokku::plugins' do
     expect(chef_run).to delete_file '/var/lib/dokku/plugins/nginx-vhosts/install'
   end
 
-  it 'should create /etc/init/nginx-reloader.conf if missing' do
-    expect(chef_run).to create_template_if_missing("/etc/init/nginx-reloader.conf").with(
-      source: 'plugins/nginx-vhosts/nginx-reloader.conf',
-      user: 'root',
-      group: 'root'
+  it 'should add dokku to the sudoers group' do
+    expect(chef_run).to install_sudo('dokku').with(
+      'user' => '%dokku',
+      'commands' => ['/etc/init.d/nginx reload'],
+      'nopasswd' => true
     )
-  end
-
-  it 'should use the nginx-reloader.conf template for /etc/init/nginx-reloader.conf' do
-    file = chef_run.template("/etc/init/nginx-reloader.conf")
-    expect(file.owner).to eq('root')
-    expect(file.group).to eq('root')
   end
 
   it 'should create /etc/nginx/conf.d/dokku.conf if missing' do
@@ -46,10 +40,6 @@ describe 'dokku::plugins' do
     file = chef_run.template("/etc/nginx/conf.d/dokku.conf")
     expect(file.owner).to eq('root')
     expect(file.group).to eq('root')
-  end
-
-  it 'should start the nginx-reloader service' do
-    expect(chef_run).to start_service('nginx-reloader')
   end
 
   it 'should run dokku_plugins_install' do

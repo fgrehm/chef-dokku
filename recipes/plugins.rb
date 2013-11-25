@@ -12,11 +12,10 @@ file "#{node['dokku']['plugin_path']}/nginx-vhosts/install" do
   action :delete
 end
 
-template "/etc/init/nginx-reloader.conf" do
-  source "plugins/nginx-vhosts/nginx-reloader.conf"
-  action :create_if_missing
-  owner 'root'
-  group 'root'
+sudo 'dokku' do
+  user '%dokku'
+  commands ['/etc/init.d/nginx reload']
+  nopasswd true
 end
 
 template "/etc/nginx/conf.d/dokku.conf" do
@@ -24,11 +23,6 @@ template "/etc/nginx/conf.d/dokku.conf" do
   action :create_if_missing
   owner 'root'
   group 'root'
-end
-
-service "nginx-reloader" do
-  provider Chef::Provider::Service::Upstart
-  action :start
 end
 
 bash "dokku_plugins_install" do
