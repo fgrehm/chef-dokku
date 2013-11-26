@@ -9,7 +9,7 @@ describe 'dokku::install'do
   it 'syncs the dokku git repository' do
     expect(chef_run).to sync_git('/var/chef/cache/dokku').with(
       repository: 'https://github.com/progrium/dokku.git',
-      reference: 'HEAD'
+      reference: 'v0.2.0'
     )
   end
 
@@ -23,7 +23,7 @@ describe 'dokku::install'do
     it 'checks out the dokku git repository' do
       expect(chef_run).to checkout_git('/var/chef/cache/dokku').with(
         repository: 'https://github.com/progrium/dokku.git',
-        reference: 'HEAD'
+        reference: 'v0.2.0'
       )
     end
   end
