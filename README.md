@@ -4,6 +4,11 @@ Manages a [dokku](https://github.com/progrium/dokku) installation, allowing
 configuration of application's [environment
 variables](https://github.com/progrium/dokku#environment-setup), installation of [plugins](https://github.com/progrium/dokku/wiki/Plugins), and population of ssh keys.
 
+## Usage
+
+Include the `bootstrap` recipe in your run list to have dokku installed/updated
+during chef runs.
+
 ## Configuration
 
 While this cookbook will be able to provide you with a working dokku
@@ -61,7 +66,7 @@ plugins | Plugins to install | Hash with plugin name as key and GitHub repositor
 plugin_path | Directory where plugins are installed | String | `/var/lib/dokku/plugins`
 apps | App environment settings to populate | Hash | `{}` see [Apps](https://github.com/fgrehm/chef-dokku#apps)
 git_repository | The git repository for the base dokku code | String | https://github.com/progrium/dokku.git
-git_revision | The git revision to check out from `git_repository` | String | HEAD
+git_revision | The git revision to check out from `git_repository` | String | v0.2.0
 
 ### Applications Attributes
 
