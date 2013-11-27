@@ -21,7 +21,7 @@ describe 'dokku::plugins' do
   end
 
   it 'should add dokku to the sudoers group' do
-    expect(chef_run).to install_sudo('dokku').with(
+    expect(chef_run).to install_sudo('dokku-nginx-reload').with(
       'user' => '%dokku',
       'commands' => ['/etc/init.d/nginx reload'],
       'nopasswd' => true

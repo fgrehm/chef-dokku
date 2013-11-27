@@ -12,7 +12,7 @@ file "#{node['dokku']['plugin_path']}/nginx-vhosts/install" do
   action :delete
 end
 
-sudo 'dokku' do
+sudo 'dokku-nginx-reload' do
   user '%dokku'
   commands ['/etc/init.d/nginx reload']
   nopasswd true
