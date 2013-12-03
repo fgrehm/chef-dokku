@@ -27,6 +27,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.provider :virtualbox do |vb, overrides|
     overrides.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/raring/current/raring-server-cloudimg-amd64-vagrant-disk1.box'
+    vb.customize [ "modifyvm", :id, "--memory", 1536, "--cpus", "2" ]
     vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     # Ubuntu's Raring 64-bit cloud image is set to a 32-bit Ubuntu OS type by
     # default in Virtualbox and thus will not boot. Manually override that.
