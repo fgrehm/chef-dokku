@@ -34,6 +34,10 @@ Vagrant.configure('2') do |config|
     vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
   end
 
+  # Install htop before configuring dokku so that we can SSH into the VM to
+  # keep an eye on things while they are being configured
+  config.vm.provision :shell, inline: 'sudo apt-get install -y htop'
+
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ['vendor/cookbooks']
     chef.add_recipe "dokku::bootstrap"
