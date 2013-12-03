@@ -1,7 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 # NOTE: Before running `vagrant up`, install the following plugins:
-# vagrant plugin install vagrant-berkshelf
 # vagrant plugin install vagrant-cachier
 # vagrant plugin install vagrant-omnibus
 
@@ -13,15 +12,13 @@ DOKKU_DOMAIN = ENV['DOKKU_DOMAIN'] || 'dokku.me'
 # that is preventing this:
 # https://github.com/adrienthebo/vagrant-auto_network/issues/2
 DOKKU_IP = ENV['DOKKU_IP'] || '10.0.0.2'
+
 # In case you have the stack available
 PREBUILT_STACK_URL = File.exist?("#{Dir.pwd}/tmp/stack.tgz") ?
   'file:///vagrant/tmp/stack.tgz' :
   'https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_79cf6805cf.tgz'
 
 Vagrant.configure('2') do |config|
-  # Enable plugins
-  # Berkshelf plugin disabled since slow and broken for vagrant-lxc. See #6.
-  #config.berkshelf.enabled = true
   config.cache.auto_detect = true
   config.omnibus.chef_version = :latest
 
