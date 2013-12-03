@@ -13,11 +13,6 @@ DOKKU_DOMAIN = ENV['DOKKU_DOMAIN'] || 'dokku.me'
 # https://github.com/adrienthebo/vagrant-auto_network/issues/2
 DOKKU_IP = ENV['DOKKU_IP'] || '10.0.0.2'
 
-# In case you have the stack available
-PREBUILT_STACK_URL = File.exist?("#{Dir.pwd}/tmp/stack.tgz") ?
-  'file:///vagrant/tmp/stack.tgz' :
-  'https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_79cf6805cf.tgz'
-
 Vagrant.configure('2') do |config|
   config.cache.auto_detect = true
   config.omnibus.chef_version = :latest
@@ -44,9 +39,6 @@ Vagrant.configure('2') do |config|
     chef.json = {
       dokku: {
         domain: DOKKU_DOMAIN,
-        buildstack: {
-          prebuilt_url: PREBUILT_STACK_URL,
-        },
         plugins: {
           postgresql: 'https://github.com/Kloadut/dokku-pg-plugin.git'
         },
