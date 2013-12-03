@@ -33,24 +33,10 @@ Vagrant.configure('2') do |config|
     vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
   end
 
-  config.vm.provider :lxc do |lxc, overrides|
-    # Required to boot nested containers
-    lxc.customize 'aa_profile', 'unconfined'
-    overrides.vm.box_url = 'http://bit.ly/vagrant-lxc-raring64-2013-07-12'
-
-    overrides.vm.provision :chef_solo do |chef|
-      chef.add_recipe 'lxc'
-    end
-  end
-
   config.vm.provision :chef_solo do |chef|
-    chef.add_recipe 'dokku::bootstrap'
+    chef.cookbooks_path = ['vendor/cookbooks']
+    chef.add_recipe "dokku::bootstrap"
     chef.json = {
-      # Required to boot nested containers
-      lxc: {
-        auto_start: false,
-        use_bridge: false
-      },
       dokku: {
         domain: DOKKU_DOMAIN,
         buildstack: {
