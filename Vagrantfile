@@ -7,7 +7,7 @@ DOKKU_DOMAIN = 'dokku.vagrant'
 # In case you have the stack available
 PREBUILT_STACK_URL = File.exist?("#{Dir.pwd}/tmp/stack.tgz") ?
   'file:///vagrant/tmp/stack.tgz' :
-  'https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_c30652f59a.tgz'
+  'https://s3.amazonaws.com/progrium-dokku/progrium_buildstep_79cf6805cf.tgz'
 
 Vagrant.configure("2") do |config|
   config.vm.box = "raring64"
