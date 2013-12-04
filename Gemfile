@@ -11,5 +11,5 @@ gem "chefspec"
 gem "foodcritic"
 gem "strainer"
 
-# Maybe convert to Stove in the future?
-gem "knife-community"
+# Used for releasing the cookbook
+gem "stove"
