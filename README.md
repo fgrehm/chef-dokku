@@ -1,57 +1,14 @@
 # chef-dokku
 
 Manages a [dokku](https://github.com/progrium/dokku) installation, allowing
-configuration of application's [environment
-variables](https://github.com/progrium/dokku#environment-setup), installation of [plugins](https://github.com/progrium/dokku/wiki/Plugins), and population of ssh keys.
+configuration of application's [environment variables](https://github.com/progrium/dokku#environment-setup),
+installation of [plugins](https://github.com/progrium/dokku/wiki/Plugins) and
+management of ssh keys.
 
 ## Usage
 
 Include the `bootstrap` recipe in your run list to have dokku installed/updated
 during chef runs.
-
-## Configuration
-
-While this cookbook will be able to provide you with a working dokku
-installation, there is some configuration you will likely want to do first:
-
-### Apps
-
-Pre-configured applications. These attributes are used to configure environment
-variables or remove an app:
-
-    default['dokku']['apps'] = {
-      'cool_app' => {
-        'env' => {
-          'ENV_VAR' => 'ENV_VAR_VALUE',
-          'ENV_VAR2' => 'ENV_VAR2_VALUE'
-        }
-      }
-    }
-
-### SSH Keys
-
-This is a required step to getting dokku working. You will want to set
-`node['dokku']['ssh_keys']` to a hash of the following structure:
-
-    default['dokku']['ssh_keys'] = {
-      'awesome_user' => 'awesome_users_pubkey',
-      'superb_user' => 'superb_users_pubkey'
-    }
-
-The [`ssh_keys`](https://github.com/fgrehm/chef-dokku#recipes) recipe will handle setting up the keys for dokku
-
-### Plugins
-
-You will likely want to install plugins to expand the functionality of your
-dokku installation. See the dokku [wiki page](https://github.com/progrium/dokku/wiki/Plugins) for a list of available plugins.
-
-Plugins are defined on the `node['dokku']['plugins']` attribute:
-
-    default['dokku']['plugins'] = {
-      'plugin_name' => 'plugin_repository_url',
-      # For example:
-      'postgresql' => 'https://github.com/Kloadut/dokku-pg-plugin'
-    }
 
 ## Attributes
 
@@ -67,6 +24,52 @@ plugin_path | Directory where plugins are installed | String | `/var/lib/dokku/p
 apps | App environment settings to populate | Hash | `{}` see [Apps](https://github.com/fgrehm/chef-dokku#apps)
 git_repository | The git repository for the base dokku code | String | https://github.com/progrium/dokku.git
 git_revision | The git revision to check out from `git_repository` | String | v0.2.0
+
+## Configuration
+
+While this cookbook will be able to provide you with a working dokku installation,
+there is some configuration you will likely want to do first:
+
+### SSH Keys
+
+This is a required step to getting dokku working. You will want to set
+`node['dokku']['ssh_keys']` to a hash of the following structure:
+
+    default['dokku']['ssh_keys'] = {
+      'awesome_user' => 'awesome_users_pubkey',
+      'superb_user' => 'superb_users_pubkey'
+    }
+
+The [`ssh_keys`](https://github.com/fgrehm/chef-dokku#recipes) recipe will handle
+setting up the keys for dokku
+
+### Apps
+
+Pre-configured applications. These attributes are used to configure environment
+variables or remove an app:
+
+    default['dokku']['apps'] = {
+      'cool_app' => {
+        'env' => {
+          'ENV_VAR' => 'ENV_VAR_VALUE',
+          'ENV_VAR2' => 'ENV_VAR2_VALUE'
+        }
+      }
+    }
+
+### Plugins
+
+You will likely want to install plugins to expand the functionality of your
+dokku installation. See the dokku [wiki page](https://github.com/progrium/dokku/wiki/Plugins)
+for a list of available plugins.
+
+Plugins are defined on the `node['dokku']['plugins']` attribute:
+
+    default['dokku']['plugins'] = {
+      'plugin_name' => 'plugin_repository_url',
+      # For example:
+      'postgresql' => 'https://github.com/Kloadut/dokku-pg-plugin'
+    }
 
 ### Applications Attributes
 
@@ -114,16 +117,19 @@ checksum | The SHA-256 checksum for the pluginhook .deb file | String | 26a79007
 ## Recipes
 
 * `recipe[dokku]` - Noop. Will be used to include LWRPs in the future
-* `recipe[dokku::bootstrap]` - A chef version of [`bootstrap.sh`](https://github.com/progrium/dokku/blob/master/bootstrap.sh). Include this recipe to have dokku installed/updated by chef
+* `recipe[dokku::bootstrap]` - A chef version of [`bootstrap.sh`](https://github.com/progrium/dokku/blob/master/bootstrap.sh).
+   Include this recipe to have dokku installed/updated by chef
 * `recipe[dokku::install]` - Clones/checks out the dokku git repository and
-  copies the required files via `make copyfiles`
-* `recipe[dokku::buildstack]` - Builds/imports the dokku [buildstep](https://github.com/progrium/buildstep) docker image. See `node['dokku']['buildstack']['use_prebuilt']` to set which buildstep is imported
+   copies the required files via `make copyfiles`
+* `recipe[dokku::buildstack]` - Builds/imports the dokku [buildstep](https://github.com/progrium/buildstep) docker image. See
+  `node['dokku']['buildstack']['use_prebuilt']` to set which buildstep is imported
 
 ## Testing and Development
 
 ### Vagrant
 
-Here's how you can quickly get testing or developing against the cookbook thanks to [Vagrant](http://vagrantup.com/).
+Here's how you can quickly get testing or developing against the cookbook thanks
+to [Vagrant](http://vagrantup.com/).
 
     vagrant plugin install vagrant-omnibus
     git clone git://github.com/fgrehm/chef-dokku.git
@@ -134,12 +140,15 @@ Here's how you can quickly get testing or developing against the cookbook thanks
 
 You can then SSH into the running VM using the `vagrant ssh` command.
 
-The VM can easily be stopped and deleted with the `vagrant destroy` command. Please see the official [Vagrant documentation](http://docs.vagrantup.com/v2/cli/index.html) for a more in depth explanation of available commands.
+The VM can easily be stopped and deleted with the `vagrant destroy` command.
+Please see the official [Vagrant documentation](http://docs.vagrantup.com/v2/cli/index.html)
+for a more in depth explanation of available commands.
 
 ## Roadmap
 
 * Convert things like ssh keys, app env, etc to LWPRs w/ Chefspec v3 matchers
-* Reduce rewritten/overridden areas of the bootstrap process to better keep up with dokku's rapid development
+* Reduce rewritten/overridden areas of the bootstrap process to better keep up
+  with dokku's rapid development
 * Plugin removal
 * Use dokku app removal process
 * Support dokku [addons](https://github.com/progrium/dokku/pull/292)
