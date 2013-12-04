@@ -59,7 +59,7 @@ These attributes are under the `node['dokku']` namespace.
 
 Attribute | Description | Type | Default
 ----------|-------------|------|--------
-root | dokku's home directory | String | `/home/dokku` 
+root | dokku's home directory | String | `/home/dokku`
 domain | Domain name to write to `['dokku']['root]'/VHOST` | String | nil (`node['fqdn']` will be used)
 ssh_keys | SSH keys that can push to dokku | Hash | `{}` see [SSH Keys](https://github.com/fgrehm/chef-dokku#ssh-keys)
 plugins | Plugins to install | Hash with plugin name as key and GitHub repository URL as value | `{}` see [Plugins](https://github.com/fgrehm/chef-dokku#plugins)
