@@ -1,7 +1,14 @@
-# A sample Gemfile
 source "https://rubygems.org"
 
 gem "rake"
-# FIXME: Figure out what exactly do we need on the Rakefile
-gem "test-kitchen"
-gem "knife-community"
+gem "berkshelf"
+# FIXME: Keep an eye on https://github.com/RiotGames/berkshelf/issues/855
+gem "faraday", "~> 0.8.5"
+
+# Testing gems
+gem "chefspec"
+gem "foodcritic"
+gem "strainer"
+
+# Used for releasing the cookbook
+gem "stove"
