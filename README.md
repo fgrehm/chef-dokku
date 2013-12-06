@@ -152,3 +152,5 @@ for a more in depth explanation of available commands.
 * Plugin removal
 * Use dokku app removal process
 * Support dokku [addons](https://github.com/progrium/dokku/pull/292)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fgrehm/chef-dokku/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
