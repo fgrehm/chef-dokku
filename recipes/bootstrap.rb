@@ -45,7 +45,7 @@ dpkg_package pluginhook_name do
 end
 
 # Pull in aufs
-include_recipe "docker::aufs"
+include_recipe "docker::aufs" if node['dokku']['docker']['use_aufs']
 
 # Create docker group with dokku as member
 group "docker" do

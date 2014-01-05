@@ -8,6 +8,8 @@ default['dokku']['pluginhook']['checksum'] = '26a790070ee0c34fd4c53b24aabeb92778
 default['dokku']['sshcommand']['filename'] = 'sshcommand'
 default['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/sshcommand/master/sshcommand'
 
+default['dokku']['docker']['use_aufs'] = true
+
 # Nginx settings for dokku
 force_default['nginx']['default_site_enabled'] = false
 force_default['nginx']['server_names_hash_bucket_size'] = 64
