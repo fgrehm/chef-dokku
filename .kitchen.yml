@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+    customize:
+      memory: 1536
+      cpus: 2
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+  - name: ubuntu-13.10
+
+suites:
+  - name: default
+    run_list:
+      - recipe[dokku::bootstrap]
+    attributes:
+      dokku:
+        domain: <%= ENV['DOKKU_DOMAIN'] || 'dokku.me' %>,
+        plugins:
+          postgresql: 'https://github.com/Kloadut/dokku-pg-plugin.git'

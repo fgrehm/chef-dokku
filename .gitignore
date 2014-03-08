@@ -4,3 +4,5 @@ vendor/cookbooks
 .ruby-version
 tmp/
 Berksfile.lock
+.kitchen/
+.kitchen.local.yml
