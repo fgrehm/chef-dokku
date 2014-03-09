@@ -15,6 +15,6 @@ allowing various resources in the installation process to be managed by chef.
 
 v0.0.1
 -----
-- [Fabio Rahm](https://github.com/fgrehm) - Initial release of the dokku
+- [Fabio Rehm](https://github.com/fgrehm) - Initial release of the dokku
 cookbook. Performs a basic dokku install via the `bootstrap` script provided by
 dokku.
