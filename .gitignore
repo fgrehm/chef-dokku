@@ -3,3 +3,4 @@ vendor/cookbooks
 .bundle
 .ruby-version
 tmp/
+Berksfile.lock
