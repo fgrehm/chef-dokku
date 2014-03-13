@@ -1,4 +1,5 @@
 # chef-dokku
+[![Build Status](https://secure.travis-ci.org/fgrehm/chef-dokku.png?branch=master)](http://travis-ci.org/fgrehm/chef-dokku)
 
 Manages a [dokku](https://github.com/progrium/dokku) installation, allowing
 configuration of application's [environment variables](https://github.com/progrium/dokku#environment-setup),
