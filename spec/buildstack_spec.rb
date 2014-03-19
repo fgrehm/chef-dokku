@@ -14,7 +14,7 @@ describe 'dokku::buildstack' do
 
     it 'should import the prebuilt image into docker' do
       expect(chef_run).to import_docker_image('progrium/buildstep').with(
-        image_url: 'prebuilt.tgz'
+        source: 'prebuilt.tgz'
       )
     end
   end
@@ -30,7 +30,7 @@ describe 'dokku::buildstack' do
 
     it 'should build the remote image' do
       expect(chef_run).to build_docker_image('progrium/buildstep').with(
-        image_url:'github.com/progrium/buildstep'
+        source:'github.com/progrium/buildstep'
       )
     end
   end
