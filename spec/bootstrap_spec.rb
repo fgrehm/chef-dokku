@@ -35,6 +35,13 @@ describe 'dokku::bootstrap' do
     end
   end
 
+  # Disabling docker::aufs with attribute flag
+  it "excludes the docker::aufs recipe when use_aufs is false" do
+    chef_run.node.set['dokku']['docker']['use_aufs'] = false
+    chef_run.converge described_recipe
+    expect(chef_run).to_not include_recipe 'docker::aufs'
+  end
+
   # sshcommand
   it "fetches sshcommand" do
     expect(chef_run).to create_remote_file("#{Chef::Config[:file_cache_path]}/sshcommand").with(

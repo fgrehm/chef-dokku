@@ -116,6 +116,14 @@ src_url | The source url for the pluginhook .deb file | String | https://s3.amaz
 filename | The pluginhook .deb file name | String | pluginhook_0.1.0_amd64.deb
 checksum | The SHA-256 checksum for the pluginhook .deb file | String | 26a790070ee0c34fd4c53b24aabeb92778faed4004110c480c13b48608545fe5
 
+### Docker Attributes
+
+These attributes are under the `node['dokku']['docker']` namespace.
+
+Attribute | Description | Type | Default
+----------|-------------|------|--------
+use_aufs | Whether to install AUFS for docker | Boolean | true
+
 ## Recipes
 
 * `recipe[dokku]` - Noop. Will be used to include LWRPs in the future
