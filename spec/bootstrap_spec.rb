@@ -7,11 +7,8 @@ describe 'dokku::bootstrap' do
 
   let(:chef_run) { chef_runner.converge described_recipe }
 
-  # We need to stub this modprobe call in the docker cookbook
-  # since it causes Travis to fail
-  # https://github.com/bflad/chef-docker/blob/587bf0334468eef4e1840231b566ff9e1fc8f1aa/recipes/aufs.rb#L33
   before do
-    stub_command("modprobe -l | grep aufs").and_return(true)
+    stub_command("which nginx").and_return('/usr/sbin/nginx')
   end
 
   # Dependency recipes
@@ -29,7 +26,7 @@ describe 'dokku::bootstrap' do
   end
 
   # Dokku recipes
-  %w{docker::aufs docker::package dokku::install dokku::plugins dokku::apps dokku::ssh_keys}.each do |recipe|
+  %w{docker dokku::install dokku::plugins dokku::apps dokku::ssh_keys}.each do |recipe|
     it "includes the #{recipe} recipe" do
       expect(chef_run).to include_recipe recipe
     end
@@ -69,11 +66,6 @@ describe 'dokku::bootstrap' do
 
   it 'should delete /etc/nginx/conf.d/example_ssl.conf' do
     expect(chef_run).to delete_file '/etc/nginx/conf.d/example_ssl.conf'
-  end
-
-  it "creates the docker group" do
-    expect(chef_run).to create_group('docker').with(
-      :members => ['dokku'], :append => true)
   end
 
   it "creates the VHOST file to the node's fqdn" do

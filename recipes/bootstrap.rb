@@ -44,17 +44,8 @@ dpkg_package pluginhook_name do
   only_if { node['dokku']['sync']['dependencies'] }
 end
 
-# Pull in aufs
-include_recipe "docker::aufs"
-
-# Create docker group with dokku as member
-group "docker" do
-  append true
-  members ['dokku']
-end
-
 # Install docker
-include_recipe "docker::package"
+include_recipe "docker"
 
 # Buildstack
 include_recipe "dokku::buildstack"

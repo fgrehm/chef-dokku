@@ -12,6 +12,12 @@ management of ssh keys.
 Include the `bootstrap` recipe in your run list to have dokku installed/updated
 during chef runs.
 
+### Docker
+
+This cookbook does not handle aspects of the docker installation such as lxc
+support or storage drivers.  Please refer to the [docker cookbook](https://github.com/bflad/chef-docker)
+for more information on the specifics of a docker install.
+
 ## Attributes
 
 These attributes are under the `node['dokku']` namespace.

@@ -11,3 +11,6 @@ default['dokku']['sshcommand']['src_url'] = 'https://raw.github.com/progrium/ssh
 # Nginx settings for dokku
 force_default['nginx']['default_site_enabled'] = false
 force_default['nginx']['server_names_hash_bucket_size'] = 64
+
+# Docker settings for dokku
+default['docker']['group_members'] << 'dokku'
