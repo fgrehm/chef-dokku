@@ -8,9 +8,11 @@ begin
   task :default => :spec
 rescue LoadError; end
 
-begin
-  require 'kitchen/rake_tasks'
-  Kitchen::RakeTasks.new
-rescue LoadError
-  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
+unless ENV['CI']
+  begin
+    require 'kitchen/rake_tasks'
+    Kitchen::RakeTasks.new
+  rescue LoadError
+    puts ">>>>> Kitchen gem not loaded, omitting tasks"
+  end
 end
