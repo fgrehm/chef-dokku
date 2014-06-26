@@ -12,6 +12,10 @@ end
   package dep
 end
 
+if node['platform'] == 'ubuntu' && node['platform_version'] == '12.04'
+  package 'python-software-properties'
+end
+
 # Install sshcommand
 sshcommand_name = node['dokku']['sshcommand']['filename']
 sshcommand_path = "#{Chef::Config[:file_cache_path]}/#{sshcommand_name}"

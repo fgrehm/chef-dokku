@@ -25,6 +25,23 @@ describe 'dokku::bootstrap' do
     end
   end
 
+  context 'on Ubuntu 12.04' do
+    let(:chef_runner) do
+      ChefSpec::Runner.new(version:'12.04')
+    end
+
+    before do
+      # 12.04 requires a 3.8 kernel. As node['kernel']['release'] is an automatic attribute,
+      # we can't override it. Just kill the constraint matcher the docker::dep_check
+      # recipe uses instead
+      allow_any_instance_of(Chef::VersionConstraint).to receive(:include?).and_return(true)
+    end
+
+    it "installs the python-software-properties package" do
+      expect(chef_run).to install_package 'python-software-properties'
+    end
+  end
+
   # Dokku recipes
   %w{docker dokku::install dokku::plugins dokku::apps dokku::ssh_keys}.each do |recipe|
     it "includes the #{recipe} recipe" do
