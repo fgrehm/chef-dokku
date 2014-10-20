@@ -13,7 +13,12 @@ describe 'dokku::apps' do
         'testapp2' => {
           'remove' => true
         },
-        'testapp3' => {}
+        'testapp3' => {
+          'tls' => {
+            'crt' => "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
+            'key' => "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
+          }
+        }
       }
     end
   end
@@ -23,7 +28,7 @@ describe 'dokku::apps' do
     expect(chef_run).to create_directory '/home/dokku/testapp'
   end
 
-  it 'should set the ownership of the testapp directory to git:git' do
+  it 'should set the ownership of the testapp directory to dokku:dokku' do
     app1_dir = chef_run.directory('/home/dokku/testapp')
     expect(app1_dir.owner).to eq('dokku')
     expect(app1_dir.group).to eq('dokku')
@@ -53,5 +58,21 @@ describe 'dokku::apps' do
     env_file = chef_run.template('/home/dokku/testapp/ENV')
     expect(env_file.owner).to eq('dokku')
     expect(env_file.group).to eq('dokku')
+  end
+
+  it 'should create a tls directory for testapp3' do
+    expect(chef_run).to create_directory '/home/dokku/testapp3/tls'
+  end
+
+  it 'should create a server.crt file for testapp3' do
+    expect(chef_run).to create_file("/home/dokku/testapp3/tls/server.crt").with_content(/CERTIFICATE/)
+  end
+
+  it 'should create a server.KEY file for testapp3' do
+    expect(chef_run).to create_file("/home/dokku/testapp3/tls/server.key").with_content(/RSA PRIVATE KEY/)
+  end
+
+  it 'should not create an tls directory for testapp2' do
+    expect(chef_run).to_not create_directory '/home/dokku/testapp2/tls'
   end
 end

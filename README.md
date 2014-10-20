@@ -61,9 +61,15 @@ variables or remove an app:
         'env' => {
           'ENV_VAR' => 'ENV_VAR_VALUE',
           'ENV_VAR2' => 'ENV_VAR2_VALUE'
+        },
+        'tls' => {
+          'crt' => "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
+          'key' => "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
         }
       }
     }
+
+Both `env` and `tls` are optional.
 
 ### Plugins
 
