@@ -63,8 +63,8 @@ variables or remove an app:
           'ENV_VAR2' => 'ENV_VAR2_VALUE'
         },
         'tls' => {
-          'crt' => "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-          'key' => "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
+          'cert_file' => '/etc/ssl/certs/my.pem',
+          'key_file' => '/etc/ssl/private/my.key'
         }
       }
     }

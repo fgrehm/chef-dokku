@@ -15,8 +15,8 @@ describe 'dokku::apps' do
         },
         'testapp3' => {
           'tls' => {
-            'crt' => "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
-            'key' => "-----BEGIN RSA PRIVATE KEY-----\n...\n-----END RSA PRIVATE KEY-----"
+            'cert_file' => '/etc/ssl/certs/my.pem',
+            'key_file' => '/etc/ssl/private/my.key'
           }
         }
       }
@@ -64,12 +64,12 @@ describe 'dokku::apps' do
     expect(chef_run).to create_directory '/home/dokku/testapp3/tls'
   end
 
-  it 'should create a server.crt file for testapp3' do
-    expect(chef_run).to create_file("/home/dokku/testapp3/tls/server.crt").with_content(/CERTIFICATE/)
+  it 'should create a server.crt link for testapp3' do
+    expect(chef_run.link('/home/dokku/testapp3/tls/server.crt')).to link_to('/etc/ssl/certs/my.pem')
   end
 
-  it 'should create a server.KEY file for testapp3' do
-    expect(chef_run).to create_file("/home/dokku/testapp3/tls/server.key").with_content(/RSA PRIVATE KEY/)
+  it 'should create a server.key link for testapp3' do
+    expect(chef_run.link('/home/dokku/testapp3/tls/server.key')).to link_to('/etc/ssl/private/my.key')
   end
 
   it 'should not create an tls directory for testapp2' do

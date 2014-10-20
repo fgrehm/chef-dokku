@@ -28,16 +28,16 @@ node['dokku']['apps'].each do |app_name, config|
       not_if { delete }
     end
 
-    file File.join(tls_directory, 'server.crt') do
-      content config['tls']['crt']
+    link File.join(tls_directory, 'server.crt') do
+      to config['tls']['cert_file']
       owner 'dokku'
       group 'dokku'
       action :create
       not_if { delete }
     end
 
-    file File.join(tls_directory, 'server.key') do
-      content config['tls']['key']
+    link File.join(tls_directory, 'server.key') do
+      to config['tls']['key_file']
       owner 'dokku'
       group 'dokku'
       action :create
