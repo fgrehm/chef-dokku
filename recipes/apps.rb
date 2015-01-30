@@ -1,12 +1,13 @@
 node['dokku']['apps'].each do |app_name, config|
   delete = !!config['remove']
-  directory File.join(node['dokku']['root'],app_name) do
+  app_directory = File.join(node['dokku']['root'], app_name)
+  directory app_directory do
     owner 'dokku'
     group 'dokku'
     action delete ? :delete : :create
   end
 
-  template File.join(node['dokku']['root'],app_name, 'ENV') do
+  template File.join(app_directory, 'ENV') do
     source 'apps/ENV.erb'
     owner  'dokku'
     group  'dokku'
@@ -15,6 +16,33 @@ node['dokku']['apps'].each do |app_name, config|
       "env" => config['env'] || {}
     )
     not_if { delete }
+  end
+
+  if config['tls']
+    tls_directory = File.join(app_directory, 'tls')
+
+    directory tls_directory do
+      owner 'dokku'
+      group 'dokku'
+      action :create
+      not_if { delete }
+    end
+
+    link File.join(tls_directory, 'server.crt') do
+      to config['tls']['cert_file']
+      owner 'dokku'
+      group 'dokku'
+      action :create
+      not_if { delete }
+    end
+
+    link File.join(tls_directory, 'server.key') do
+      to config['tls']['key_file']
+      owner 'dokku'
+      group 'dokku'
+      action :create
+      not_if { delete }
+    end
   end
 
   # Clean up docker

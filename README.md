@@ -61,9 +61,25 @@ variables or remove an app:
         'env' => {
           'ENV_VAR' => 'ENV_VAR_VALUE',
           'ENV_VAR2' => 'ENV_VAR2_VALUE'
+        },
+        'tls' => {
+          'cert_file' => '/etc/ssl/certs/my.pem',
+          'key_file' => '/etc/ssl/private/my.key'
         }
       }
     }
+
+Both `env` and `tls` are optional.
+
+To enable TLS connection to your application, use `tls` attribute. `cert_file` and `key_file` are
+the paths to .crt/.pem and .key files. The [`apps`](https://github.com/fgrehm/chef-dokku#recipes)
+repice will create symlinks inside `$APP_HOME/tls` folder pointing to paths you've defined.
+
+If you want to enable TLS connections for all applications at once, you can use
+[certificate](https://supermarket.getchef.com/cookbooks/certificate) cookbook.
+
+For more information, check out
+[dokku documentation](http://progrium.viewdocs.io/dokku/tls-spdy-support).
 
 ### Plugins
 
