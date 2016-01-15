@@ -7,6 +7,10 @@ configuration of application's [environment variables](https://github.com/progri
 installation of [plugins](https://github.com/progrium/dokku/wiki/Plugins) and
 management of ssh keys.
 
+## :warning: This project is no longer being actively maintained :warning:
+
+This project is no longer being maintained and you might want to check out https://github.com/nickcharlton/dokku-cookbook
+
 ## Usage
 
 Include the `bootstrap` recipe in your run list to have dokku installed/updated
