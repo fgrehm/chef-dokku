@@ -160,10 +160,11 @@ Here's how you can quickly get testing or developing against the cookbook thanks
 to [Vagrant](http://vagrantup.com/).
 
     vagrant plugin install vagrant-omnibus
+    vagrant plugin install vagrant-cachier
     git clone git://github.com/fgrehm/chef-dokku.git
     cd chef-dokku
     bundle install
-    bundle exec berks install -p vendor/cookbooks
+    bundle exec berks vendor vendor/cookbooks
     vagrant up
 
 You can then SSH into the running VM using the `vagrant ssh` command.
